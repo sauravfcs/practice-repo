@@ -17,18 +17,23 @@
 
     <script src="https://orgfarm-970d6624bd-dev-ed.develop.lightning.force.com/lightning/lightning.out.js"></script>
 
-<script>
-$Lightning.use("c:GitApp", function() {
-    $Lightning.createComponent(
-        "c:sfcomponent",
-        {},
-        "container",
-        function(cmp) {
-            console.log("Component loaded");
-        }
-    );
-});
-</script>
+ <script>
+        $Lightning.use(
+            "c:GitApp", // 
+            function () {
+                $Lightning.createComponent(
+                    "c:sfcomponent", 
+                    {},
+                    "container",
+                    function (cmp) {
+                        console.log("Component loaded");
+                    }
+                );
+            },
+            "https://orgfarm-970d6624bd-dev-ed.develop.my.salesforce.com", // 
+            "00DKB00000130Ef!ARIAQFBm.dTp6qjRz.SYKn6OYAtIu5NTfms36oe3IFDdTRVrrx46CXrHP_vMgAH1V2IAf2mdfg1taEv.jYcz3kSUrHTO2yF0" 
+        );
+    </script>
 
 <div id="container"></div>
 
