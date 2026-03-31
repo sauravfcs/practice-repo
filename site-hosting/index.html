@@ -1,41 +1,65 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>My Simple SF Site</title>
+    <title>Lightning Out OAuth</title>
+    <script src="https://orgfarm-970d6624bd-dev-ed.develop.my.salesforce.com/lightning/lightning.out.js"></script>
 </head>
+
 <body>
-    <h1>Hello, GitHub Pages!</h1>
-    <p>This is my first website hosted for free.</p>
 
-<!--
-    <iframe 
-    src="https://orgfarm-970d6624bd-dev-ed.develop.my.site.com/HYD/s/welcome-to-drg"
-    width="100%" 
-    height="800px"
-    style="border:none;">
-  </iframe>   -->
+<h3>Lightning Out Test</h3>
+<button onclick="login()">Login</button>
 
-    <script src="https://orgfarm-970d6624bd-dev-ed.develop.my.site.com/HYD/lightning/lightning.out.js"></script>
+<div id="container"></div>
 
- <script>
+<script>
+const clientId = "YOUR_CONSUMER_KEY";
+const redirectUri = "https://sauravfcs.github.io/";
+
+function login() {
+    const url =
+        "https://login.salesforce.com/services/oauth2/authorize" +
+        "?response_type=token" +
+        "&client_id=" + clientId +
+        "&redirect_uri=" + redirectUri;
+
+    window.location.href = url;
+}
+
+function getToken() {
+    const hash = window.location.hash;
+    if (!hash) return null;
+
+    const params = new URLSearchParams(hash.substring(1));
+    return params.get("access_token");
+}
+
+window.onload = function () {
+    const token = getToken();
+
+    if (token) {
+        console.log("✅ Token received");
+
         $Lightning.use(
-            "c:GitApp", // 
+            "c:GitApp",
             function () {
-                console.log("✅ Lightning initialized");
                 $Lightning.createComponent(
-                    "c:sfcomponent", 
+                    "c:sfcomponentwrapper",
                     {},
                     "container",
-                    function (cmp) {
-                        console.log("Component loaded");
+                    function () {
+                        console.log("✅ Component Loaded");
                     }
                 );
             },
-            "https://orgfarm-970d6624bd-dev-ed.develop.my.site.com/HYD"
+            "https://orgfarm-970d6624bd-dev-ed.develop.my.salesforce.com",
+            token
         );
-    </script>
-
-<div id="container"></div>
+    } else {
+        console.log("❌ No token found - click Login");
+    }
+};
+</script>
 
 </body>
 </html>
